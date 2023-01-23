@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+generator csvdb {
+  provider = "prisma-client-js"
+}
+
+model pagamentos {
+  id Int     @id @default(autoincrement())
+  matricula   Int
+  mes DateTime
+  valor Float 
+  status  String
+
+  @@map("pagamentos")
+}
