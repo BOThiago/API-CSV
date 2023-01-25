@@ -1,5 +1,7 @@
 # CSV-test
 
+Consistem uma API de importação de CSV, usando typescript, prisma e o db postgres
+
 Para conseguir inicializar a aplicação é necessário instalar as dependencias com o comando "npm intall dependencies"
 
 Em .env configurar conexão com um banco de dados postgres
