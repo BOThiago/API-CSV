@@ -11,11 +11,23 @@ generator csvdb {
 }
 
 model pagamentos {
-  id Int     @id @default(autoincrement())
-  matricula   Float
-  mes String
-  valor Float 
-  status  String
+  
+  id           Int @id @default(autoincrement())
+  matricula    Float 
+  mes          String
+  valor        Float 
+  status       String
 
   @@map("pagamentos")
+
+}
+
+model inadimplencias {
+
+  id           Int @id @default(autoincrement())
+  mes          String
+  inaplencia   Float
+
+  @@map("inadimplencia")
+
 }

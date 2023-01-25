@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { Readable } from "stream";
 import readline from "readline"; 
 import { client } from "./database/client";
+import { pagamentos } from "@prisma/client";
 
 const multer  = require("multer");
 
@@ -66,5 +67,20 @@ router.post(
 
     }
 );
+
+router.get(
+    "/pagos", async (request: Request, response: Response) => {
+        async function main(){
+            const pagos = await client.pagamentos.findMany({
+                where: {
+                    status: {
+                        startsWith: "p",
+                    },
+                },
+            });
+        console.log(pagos);    
+    };
+    return response.status(200);
+});
 
 export { router };
