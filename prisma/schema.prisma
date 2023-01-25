@@ -12,8 +12,8 @@ generator csvdb {
 
 model pagamentos {
   id Int     @id @default(autoincrement())
-  matricula   Int
-  mes DateTime
+  matricula   Float
+  mes String
   valor Float 
   status  String
 
