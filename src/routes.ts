@@ -70,7 +70,6 @@ router.post(
 
 router.get(
     "/pagos", async (request: Request, response: Response) => {
-        async function main(){
             const pagos = await client.pagamentos.findMany({
                 where: {
                     status: {
@@ -78,9 +77,31 @@ router.get(
                     },
                 },
             });
-        console.log(pagos);    
-    };
-    return response.status(200);
-});
+
+        const pagosJSON = JSON.stringify(pagos);
+
+       console.log(pagosJSON);
+
+        return response.json(pagosJSON).status(200);
+        
+    });
+
+router.get(
+    "/inadimplentes", async (request: Request, response: Response) => {
+            const abertos = await client.pagamentos.findMany({
+                where: {
+                    status: {
+                        startsWith: "a",
+                    },
+                },
+            });
+    
+        const abertosJSON = JSON.stringify(abertos);
+    
+        console.log(abertosJSON);
+    
+        return response.json(abertosJSON).status(200);
+            
+    });
 
 export { router };
