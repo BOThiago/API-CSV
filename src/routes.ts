@@ -20,7 +20,7 @@ interface Pagamentos {
 const invalidColumn = "matricula,mes,valor,status"
 
 router.post(
-    "/pagamentos", 
+    "/pagamentos",
     multerConfig.single("file"), async (request: Request, response: Response) => {
         
         //console.log(_req.file?.buffer.toString("utf-8"));
@@ -88,20 +88,31 @@ router.get(
 
 router.get(
     "/inadimplentes", async (request: Request, response: Response) => {
-            const abertos = await client.pagamentos.findMany({
-                where: {
-                    status: {
-                        startsWith: "a",
-                    },
+        const abertos = await client.pagamentos.findMany({
+            where: {
+                status: {
+                    startsWith: "a",
                 },
-            });
+            },
+        });
+
+    const abertosJSON = JSON.stringify(abertos);
     
-        const abertosJSON = JSON.stringify(abertos);
+    console.log(abertosJSON);
     
-        console.log(abertosJSON);
-    
-        return response.json(abertosJSON).status(200);
+    return response.json(abertosJSON).status(200);
             
-    });
+});
+
+/*router.get(
+    "/relatorio",  async (request: Request, response: Response) => {
+        const abertos = await client.pagamentos.findMany({
+            where: {
+                status: {
+                    startsWith: "a" 
+                },
+            },
+        },
+    });*/
 
 export { router };
