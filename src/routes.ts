@@ -63,6 +63,9 @@ router.post(
                 },
             })
         }
+
+        console.log(pagamentos);
+
         return response.json(pagamentos);
 
     }
@@ -97,7 +100,16 @@ router.get(
         });
 
     const abertosJSON = JSON.stringify(abertos);
-    
+
+    const pagamentos: Pagamentos[] = [];
+
+    abertosJSON[0] ? pagamentos.push({
+        matricula: Number(abertosJSON[0]),
+        mes: abertosJSON[1],
+        valor: Number(abertosJSON[2]),
+        status: abertosJSON[3],
+    }) : [];  
+
     console.log(abertosJSON);
     
     return response.json(abertosJSON).status(200);
