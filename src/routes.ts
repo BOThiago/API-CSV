@@ -2,7 +2,9 @@ import { Request, Response, Router } from "express";
 import { Readable } from "stream";
 import readline from "readline"; 
 import { client } from "./database/client";
-import { pagamentos } from "@prisma/client";
+import { pagamentos, PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const multer  = require("multer");
 
@@ -66,7 +68,7 @@ router.post(
 
         console.log(pagamentos);
 
-        return response.json(pagamentos);
+        return response.json(pagamentos).status(200);
 
     }
 );
@@ -81,13 +83,22 @@ router.get(
                 },
             });
 
-        const pagosJSON = JSON.stringify(pagos);
+        for await ( let {matricula,valor,mes,status} of pagos ) {
+            await client.pagos.create({
+                data: {
+                    matricula,
+                    mes,
+                    valor,
+                    status,
+                },
+            });
+        };
 
-       console.log(pagosJSON);
-
-        return response.json(pagosJSON).status(200);
+    console.log(pagos);
+    
+    return response.json(pagos).status(200);
         
-    });
+});
 
 router.get(
     "/inadimplentes", async (request: Request, response: Response) => {
@@ -99,32 +110,21 @@ router.get(
             },
         });
 
-    const abertosJSON = JSON.stringify(abertos);
+        for await ( let {matricula,valor,mes,status} of abertos ) {
+            await client.inadimplentes.create({
+                data: {
+                    matricula,
+                    mes,
+                    valor,
+                    status,
+                },
+            });
+        };
 
-    const pagamentos: Pagamentos[] = [];
-
-    abertosJSON[0] ? pagamentos.push({
-        matricula: Number(abertosJSON[0]),
-        mes: abertosJSON[1],
-        valor: Number(abertosJSON[2]),
-        status: abertosJSON[3],
-    }) : [];  
-
-    console.log(abertosJSON);
+    console.log(abertos);
     
-    return response.json(abertosJSON).status(200);
+    return response.json(abertos).status(200);
             
 });
-
-/*router.get(
-    "/relatorio",  async (request: Request, response: Response) => {
-        const abertos = await client.pagamentos.findMany({
-            where: {
-                status: {
-                    startsWith: "a" 
-                },
-            },
-        },
-    });*/
 
 export { router };
