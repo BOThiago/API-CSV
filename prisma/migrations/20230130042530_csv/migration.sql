@@ -30,3 +30,12 @@ CREATE TABLE "inadimplentes" (
 
     CONSTRAINT "inadimplentes_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateTable
+CREATE TABLE "ina" (
+    "id" SERIAL NOT NULL,
+    "mes" TEXT NOT NULL,
+    "inadimplencia" DOUBLE PRECISION NOT NULL,
+
+    CONSTRAINT "ina_pkey" PRIMARY KEY ("id")
+);

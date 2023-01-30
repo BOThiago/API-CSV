@@ -45,3 +45,13 @@ model inadimplentes {
   @@map("inadimplentes")
 
 }
+
+model ina {
+
+  id Int @id @default(autoincrement())
+  mes String
+  inadimplencia Float
+
+  @@map("ina")
+
+}
