@@ -451,7 +451,7 @@ router.get(
 
     const ina = JSON.parse(inadimplenciaJSON);
 
-    //console.log(ina);
+    console.log(ina);
 
     let inadimplenciaLineSplit: string[] = [] 
 
