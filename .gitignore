@@ -1,3 +1,5 @@
 node_modules
 .env
 uploads
+/prisma/migrations
+prisma/migrations
