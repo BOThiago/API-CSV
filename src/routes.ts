@@ -465,14 +465,14 @@ router.get(
         inadimplencia: Number(inadimplenciaLineSplit[1]),
     }) : [];
         
-    /*for await ( let {mes,inadimplencia} of ina ) {
+    for await ( let {mes,inadimplencia} of ina ) {
         await client.ina.create({
             data: {
                 mes,
                 inadimplencia,
             },
         });
-    }*/
+    }
 }
 
     const parseObj = new Parser();

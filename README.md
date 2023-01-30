@@ -6,9 +6,13 @@ Para conseguir inicializar a aplicação é necessário instalar as dependencias
 
 "npm intall dependencies"
 
+npm install @prisma/client
+
+npm i @prisma/engines
+
 Em .env configurar conexão com um banco de dados postgres
 
-No SQL Shell (Postgres) criar uma database com o nome 
+No SQL Shell (Postgres) crie uma database com o nome 
 
 "csvdb"
 
@@ -26,4 +30,12 @@ Para inicialoza a aplicação é necessário digitar o comando
 
 "npm run dev"
 
-Com isso a aplicação deve subir na porta 3000.
+Com isso a aplicação deve subir na porta 3000
+
+No Postman ou no Insomnia crie uma rota do tipo POST (localhost:3000/pagamentos), vá em form-data e defina 'KEY' como 'file', e insira o arquivo CSV desejado.
+
+Também será possível acessar a rota do tipo GET (localhost:3000/Inadimplentes), que mostrará todas as matriculas que estão com o status em aberto
+
+                             a rota do tipo GET (localhost:3000/pagos), que mostrará todas as matriculas que estão com o status em pago
+
+                             e por fim a rota do tipo GET (localhost:3000/total), que mostrará o csv com as inadimplencias.

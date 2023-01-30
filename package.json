@@ -12,6 +12,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@prisma/client": "^4.9.0",
     "@prisma/engines": "^4.9.0",
     "csv": "^0.3.7",
     "csvjson": "^5.1.0",
@@ -55,5 +56,5 @@
     "url": "https://github.com/BOThiago/CSV-test/issues"
   },
   "homepage": "https://github.com/BOThiago/CSV-test#readme",
-  "description": ""
+  "description": "Consistem uma API de importação de CSV, usando typescript, express, prisma e o db postgres"
 }
