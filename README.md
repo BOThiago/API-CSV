@@ -34,8 +34,10 @@ Com isso a aplicação deve subir na porta 3000
 
 No Postman ou no Insomnia crie uma rota do tipo POST (localhost:3000/pagamentos), vá em form-data e defina 'KEY' como 'file', e insira o arquivo CSV desejado.
 
-Também será possível acessar a rota do tipo GET (localhost:3000/Inadimplentes), que mostrará todas as matriculas que estão com o status em aberto
+                            Também será possível acessar 
+                            
+                            a rota do tipo GET (localhost:3000/Inadimplentes), que mostrará todas as matriculas que estão com o status em aberto
 
-                             a rota do tipo GET (localhost:3000/pagos), que mostrará todas as matriculas que estão com o status em pago
+                            a rota do tipo GET (localhost:3000/pagos), que mostrará todas as matriculas que estão com o status em pago
 
-                             e por fim a rota do tipo GET (localhost:3000/total), que mostrará o csv com as inadimplencias.
+                            e por fim a rota do tipo GET (localhost:3000/total), que mostrará o csv com as inadimplencias.

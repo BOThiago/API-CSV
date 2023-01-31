@@ -12,7 +12,6 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@prisma/client": "^4.9.0",
     "@prisma/engines": "^4.9.0",
     "csv": "^0.3.7",
     "csvjson": "^5.1.0",

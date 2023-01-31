@@ -451,8 +451,6 @@ router.get(
 
     const ina = JSON.parse(inadimplenciaJSON);
 
-    console.log(ina);
-
     let inadimplenciaLineSplit: string[] = [] 
 
     for await (let line of inadimplenciaLine) {
@@ -460,13 +458,15 @@ router.get(
            inadimplenciaLineSplit = line.split(",");
         }
                         
-    inadimplenciaLineSplit[0] ? ina.push({
+    /*inadimplenciaLineSplit[0] ? ina.push({
         mes: inadimplenciaLineSplit[0],
         inadimplencia: Number(inadimplenciaLineSplit[1]),
     }) : [];
-        
+
+    console.log(ina);*/
+
     for await ( let {mes,inadimplencia} of ina ) {
-        await client.ina.create({
+       await client.ina.create({
             data: {
                 mes,
                 inadimplencia,
@@ -477,11 +477,13 @@ router.get(
 
     const parseObj = new Parser();
 
-    const csv = parseObj.parse(ina)
+    const csv = parseObj.parse(ina);
 
-    console.log("CSV is: ", csv);
+    console.log("CSV: ", csv);
 
-    return response.status(200);
+    return response.status(200).json({
+        body: csv
+    });
 });
 
 router.get(
