@@ -18,7 +18,7 @@ interface Pagamentos {
     status: string
 };
 
-const invalidColumn = "matricula,mes,valor,status"
+const invalidColumn = "matricula, mes, valor, status"
 
 router.post(
     "/upload",
@@ -52,7 +52,7 @@ router.post(
             }) : [];   
         }
 
-        for await ( let {matricula,valor,mes,status} of pagamentos ) {
+        for await ( let {matricula, valor, mes, status} of pagamentos ) {
             await client.pagamentos.create({
                 data: {
                     matricula,
@@ -75,7 +75,7 @@ router.get(
             const pagos = await client.pagamentos.findMany({
                 where: {
                     status: {
-                        startsWith: "p",
+                        startsWith: " p",
                     },
                 },
             });
@@ -102,7 +102,7 @@ router.get(
         const abertos = await client.pagamentos.findMany({
             where: {
                 status: {
-                    startsWith: "a",
+                    startsWith: " a",
                 },
             },
         });
@@ -138,7 +138,7 @@ router.get(
         let janVA = 0
 
         janeiro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 janVA = janVA + item.valor
             }
         });
@@ -160,7 +160,7 @@ router.get(
         let fevVA = 0
 
         fevereiro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 fevVA = fevVA + item.valor
             };
         });
@@ -182,7 +182,7 @@ router.get(
         let marVA = 0
 
         marco.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 marVA = marVA + item.valor
             };
         });
@@ -204,7 +204,7 @@ router.get(
         let abrVA = 0
 
         abril.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 abrVA = abrVA + item.valor
             };
         });
@@ -226,7 +226,7 @@ router.get(
         let maiVA = 0
 
         maio.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 maiVA = maiVA + item.valor
             };
         });
@@ -248,7 +248,7 @@ router.get(
         let junVA = 0
 
         junho.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 junVA = junVA + item.valor
             };
         });
@@ -270,7 +270,7 @@ router.get(
         let julVA = 0
 
         julho.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 julVA = julVA + item.valor
             };
         });
@@ -292,7 +292,7 @@ router.get(
         let agoVA = 0
 
         julho.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 agoVA = agoVA + item.valor
             };
         });
@@ -314,7 +314,7 @@ router.get(
         let setVA = 0
 
         setembro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 setVA = setVA + item.valor
             };
         });
@@ -336,7 +336,7 @@ router.get(
         let outVA = 0
 
         outubro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 outVA = outVA + item.valor
             };
         });
@@ -358,7 +358,7 @@ router.get(
         let novVA = 0
 
         novembro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 novVA = novVA + item.valor
             };
         });
@@ -380,7 +380,7 @@ router.get(
         let dezVA = 0
 
         dezembro.filter(item => {
-            if(item.status === "aberto") {
+            if(item.status === " aberto") {
                 dezVA = dezVA + item.valor
             };
         });
