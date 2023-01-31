@@ -21,10 +21,8 @@ interface Pagamentos {
 const invalidColumn = "matricula,mes,valor,status"
 
 router.post(
-    "/pagamentos",
+    "/upload",
     multerConfig.single("file"), async (request: Request, response: Response) => {
-        
-        //console.log(_req.file?.buffer.toString("utf-8"));
       
         const { file } = request;
 
@@ -151,8 +149,6 @@ router.get(
 
         const JanRes = janVA / jan;
 
-        //console.log(JanRes);
-
         const fevereiro = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -174,8 +170,6 @@ router.get(
         fevereiro.forEach(item => fev = fev + item.valor);
 
         const fevRes = (fevVA + janVA) / (jan + fev);
-
-        //console.log(fevRes);
 
         const marco = await client.pagamentos.findMany({
             where: {
@@ -199,10 +193,6 @@ router.get(
 
         const marRes = (marVA + fevVA + janVA) / (jan + fev + mar);
 
-        //console.log(marRes);
-
-        //return response.json(marRes);
-
         const abril = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -224,10 +214,6 @@ router.get(
         abril.forEach(item => abr = abr + item.valor);
 
         const abrRes = (abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr);
-
-        //console.log(abrRes);
-
-        //return response.json(abrRes);
 
         const maio = await client.pagamentos.findMany({
             where: {
@@ -251,8 +237,6 @@ router.get(
 
         const maiRes = (maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai);
 
-        //console.log(maiRes);
-
         const junho = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -274,8 +258,6 @@ router.get(
         junho.forEach(item => jun = jun + item.valor);
 
         const junRes = (junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun);
-
-        //console.log(junRes);
 
         const julho = await client.pagamentos.findMany({
             where: {
@@ -299,8 +281,6 @@ router.get(
 
         const julRes = (julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul);
 
-        //console.log(julRes);
-
         const agosto = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -322,8 +302,6 @@ router.get(
         julho.forEach(item => ago = ago + item.valor);
 
         const agoRes = (agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago);
-
-        //console.log(agoRes);
 
         const setembro = await client.pagamentos.findMany({
             where: {
@@ -347,8 +325,6 @@ router.get(
 
         const setRes = (setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set);
 
-        //console.log(setRes);
-        
         const outubro = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -371,8 +347,6 @@ router.get(
 
         const outRes = (outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out);
 
-        //console.log(outRes);
-        
         const novembro = await client.pagamentos.findMany({
             where: {
                 mes: {
@@ -394,8 +368,6 @@ router.get(
         novembro.forEach(item => nov = nov + item.valor);
 
         const novRes = (novVA + outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out + nov);
-
-        //console.log(novRes);
 
         const dezembro = await client.pagamentos.findMany({
             where: {
@@ -419,27 +391,7 @@ router.get(
 
         const dezRes = (dezVA + novVA + outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out + nov + dez);
 
-    //console.log(dezRes);
-
-    //console.log(janeiro);
-
-    //let inadimplenciaJSON = JSON.stringify({"mes"});
-
-   /* let inadimplenciaJSON = '{"mes": "janeiro", "inadimplencia": ['+ JanRes + ']},'+
-                        '{"mes": "fevereiro", "inadimplencia": ['+ fevRes +']},'+
-                        '{"mes": "marco", "inadimplencia": ['+ marRes +']},'+
-                        '{"mes": "abril", "inadimplencia": ['+ abrRes +']},'+
-                        '{"mes": "maio", "inadimplencia": ['+ maiRes +']},'+
-                        '{"mes": "junho", "inadimplencia": ['+ junRes +']},'+
-                        '{"mes": "julho", "inadimplencia": ['+ julRes +']},'+
-                        '{"mes": "agosto", "inadimplencia": ['+ agoRes +']},'+
-                        '{"mes": "setembro", "inadimplencia": ['+ setRes +']},'+
-                        '{"mes": "outubro", "inadimplencia": ['+ outRes +']},'+
-                        '{"mes": "novembro", "inadimplencia": ['+ novRes +']},'+
-                        '{"mes": "dezembro", "inadimplencia": ['+ dezRes +']}' +
-                        ']}'; */
-
-    let inadimplenciaJSON = '[{ "mes": "janeiro", "inadimplencia": ' + JanRes + '}, {"mes": "fevereiro", "inadimplencia": '+ fevRes +'}, {"mes": "marco", "inadimplencia": '+ marRes +'}, {"mes": "abril", "inadimplencia": '+ abrRes +'}, {"mes": "maio", "inadimplencia": '+ maiRes +'}, {"mes": "junho", "inadimplencia": '+ junRes +'}, {"mes": "julho", "inadimplencia": '+ julRes +'}, {"mes": "agosto", "inadimplencia": '+ agoRes +'}, {"mes": "setembro", "inadimplencia": '+ setRes +'}, {"mes": "outubro", "inadimplencia": '+ outRes +'}, {"mes": "novembro", "inadimplencia": '+ novRes +'}, {"mes": "dezembro", "inadimplencia": '+ dezRes +'}]';
+        let inadimplenciaJSON = '[{ "mes": "janeiro", "inadimplencia": ' + JanRes + '}, {"mes": "fevereiro", "inadimplencia": '+ fevRes +'}, {"mes": "marco", "inadimplencia": '+ marRes +'}, {"mes": "abril", "inadimplencia": '+ abrRes +'}, {"mes": "maio", "inadimplencia": '+ maiRes +'}, {"mes": "junho", "inadimplencia": '+ junRes +'}, {"mes": "julho", "inadimplencia": '+ julRes +'}, {"mes": "agosto", "inadimplencia": '+ agoRes +'}, {"mes": "setembro", "inadimplencia": '+ setRes +'}, {"mes": "outubro", "inadimplencia": '+ outRes +'}, {"mes": "novembro", "inadimplencia": '+ novRes +'}, {"mes": "dezembro", "inadimplencia": '+ dezRes +'}]';
 
     const readableFile = new Readable();
         readableFile.push(inadimplenciaJSON);
@@ -457,13 +409,6 @@ router.get(
         if (line !== invalidColumn) {
            inadimplenciaLineSplit = line.split(",");
         }
-                        
-    /*inadimplenciaLineSplit[0] ? ina.push({
-        mes: inadimplenciaLineSplit[0],
-        inadimplencia: Number(inadimplenciaLineSplit[1]),
-    }) : [];
-
-    console.log(ina);*/
 
     for await ( let {mes,inadimplencia} of ina ) {
        await client.ina.create({
@@ -482,7 +427,8 @@ router.get(
     console.log("CSV: ", csv);
 
     return response.status(200).json({
-        body: csv
+        csv: csv,
+        json: ina
     });
 });
 
@@ -513,7 +459,7 @@ router.get(
 
     console.log(JaneiroResultado);
 
-    return response.status(JaneiroResultado);
+    return response.json(JaneiroResultado);
 
 });
 
