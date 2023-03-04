@@ -18,12 +18,14 @@ interface Pagamentos {
     status: string;
 }
 
-const invalidColumn = "matricula,mes,valor,status";
+const invalidColumn = "matricula,mes,valor,status"
 
 router.post(
     "/pagamentos",
-    multerConfig.single("file"),
-    async (request: Request, response: Response) => {
+    multerConfig.single("file"), async (request: Request, response: Response) => {
+        
+        //console.log(_req.file?.buffer.toString("utf-8"));
+      
         const { file } = request;
 
         const buffer = file?.buffer;
@@ -54,7 +56,7 @@ router.post(
                 : [];
         }
 
-        for await (let { matricula, valor, mes, status } of pagamentos) {
+        for await ( let {matricula,valor,mes,status} of pagamentos ) {
             await client.pagamentos.create({
                 data: {
                     matricula,
@@ -71,14 +73,15 @@ router.post(
     }
 );
 
-router.get("/pagos", async (request: Request, response: Response) => {
-    const pagos = await client.pagamentos.findMany({
-        where: {
-            status: {
-                startsWith: "p",
-            },
-        },
-    });
+router.get(
+    "/pagos", async (request: Request, response: Response) => {
+            const pagos = await client.pagamentos.findMany({
+                where: {
+                    status: {
+                        startsWith: "p",
+                    },
+                },
+            });
 
     for await (let { matricula, valor, mes, status } of pagos) {
         await client.pagos.create({
@@ -96,14 +99,15 @@ router.get("/pagos", async (request: Request, response: Response) => {
     return response.json(pagos).status(200);
 });
 
-router.get("/inadimplentes", async (request: Request, response: Response) => {
-    const abertos = await client.pagamentos.findMany({
-        where: {
-            status: {
-                startsWith: "a",
+router.get(
+    "/inadimplentes", async (request: Request, response: Response) => {
+        const abertos = await client.pagamentos.findMany({
+            where: {
+                status: {
+                    startsWith: "a",
+                },
             },
-        },
-    });
+        });
 
     for await (let { matricula, valor, mes, status } of abertos) {
         await client.inadimplentes.create({
@@ -142,20 +146,349 @@ router.get("/total", async (request: Request, response: Response) => {
         pagamentos.forEach((item) => {
             soma += item.valor;
 
-            if (item.status === "aberto") {
-                va += item.valor;
+        janeiro.filter(item => {
+            if(item.status === "aberto") {
+                janVA = janVA + item.valor
             }
         });
 
-        const totalMes = soma;
-        result.push({ mes: mes, total: totalMes });
-        totalVA += va;
-        total += totalMes;
-    }
+        let jan = 0
 
-    const totalRes = totalVA / total;
+        janeiro.forEach(item => jan = jan + item.valor);
 
-    response.json({ meses: result, total: totalRes });
+        const JanRes = janVA / jan;
+
+        //console.log(JanRes);
+
+        const fevereiro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "2",
+                },
+            },
+        });
+
+        let fevVA = 0
+
+        fevereiro.filter(item => {
+            if(item.status === "aberto") {
+                fevVA = fevVA + item.valor
+            };
+        });
+
+        let fev = 0
+
+        fevereiro.forEach(item => fev = fev + item.valor);
+
+        const fevRes = (fevVA + janVA) / (jan + fev);
+
+        //console.log(fevRes);
+
+        const marco = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "3",
+                },
+            },
+        });
+
+        let marVA = 0
+
+        marco.filter(item => {
+            if(item.status === "aberto") {
+                marVA = marVA + item.valor
+            };
+        });
+
+        let mar = 0
+
+        marco.forEach(item => mar = mar + item.valor);
+
+        const marRes = (marVA + fevVA + janVA) / (jan + fev + mar);
+
+        //console.log(marRes);
+
+        //return response.json(marRes);
+
+        const abril = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "4",
+                },
+            },
+        });
+
+        let abrVA = 0
+
+        abril.filter(item => {
+            if(item.status === "aberto") {
+                abrVA = abrVA + item.valor
+            };
+        });
+
+        let abr = 0
+
+        abril.forEach(item => abr = abr + item.valor);
+
+        const abrRes = (abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr);
+
+        //console.log(abrRes);
+
+        //return response.json(abrRes);
+
+        const maio = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "5",
+                },
+            },
+        });
+
+        let maiVA = 0
+
+        maio.filter(item => {
+            if(item.status === "aberto") {
+                maiVA = maiVA + item.valor
+            };
+        });
+
+        let mai = 0
+
+        maio.forEach(item => mai = mai + item.valor);
+
+        const maiRes = (maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai);
+
+        //console.log(maiRes);
+
+        const junho = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "6",
+                },
+            },
+        });
+
+        let junVA = 0
+
+        junho.filter(item => {
+            if(item.status === "aberto") {
+                junVA = junVA + item.valor
+            };
+        });
+
+        let jun = 0
+
+        junho.forEach(item => jun = jun + item.valor);
+
+        const junRes = (junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun);
+
+        //console.log(junRes);
+
+        const julho = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "7",
+                },
+            },
+        });
+
+        let julVA = 0
+
+        julho.filter(item => {
+            if(item.status === "aberto") {
+                julVA = julVA + item.valor
+            };
+        });
+
+        let jul = 0
+
+        julho.forEach(item => jul = jul + item.valor);
+
+        const julRes = (julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul);
+
+        //console.log(julRes);
+
+        const agosto = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "8",
+                },
+            },
+        });
+
+        let agoVA = 0
+
+        julho.filter(item => {
+            if(item.status === "aberto") {
+                agoVA = agoVA + item.valor
+            };
+        });
+
+        let ago = 0
+
+        julho.forEach(item => ago = ago + item.valor);
+
+        const agoRes = (agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago);
+
+        //console.log(agoRes);
+
+        const setembro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "9",
+                },
+            },
+        });
+
+        let setVA = 0
+
+        setembro.filter(item => {
+            if(item.status === "aberto") {
+                setVA = setVA + item.valor
+            };
+        });
+
+        let set = 0
+
+        setembro.forEach(item => set = set + item.valor);
+
+        const setRes = (setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set);
+
+        //console.log(setRes);
+        
+        const outubro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "10",
+                },
+            },
+        });
+
+        let outVA = 0
+
+        outubro.filter(item => {
+            if(item.status === "aberto") {
+                outVA = outVA + item.valor
+            };
+        });
+
+        let out = 0
+
+        outubro.forEach(item => out = out + item.valor);
+
+        const outRes = (outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out);
+
+        //console.log(outRes);
+        
+        const novembro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "11",
+                },
+            },
+        });
+
+        let novVA = 0
+
+        novembro.filter(item => {
+            if(item.status === "aberto") {
+                novVA = novVA + item.valor
+            };
+        });
+
+        let nov = 0
+
+        novembro.forEach(item => nov = nov + item.valor);
+
+        const novRes = (novVA + outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out + nov);
+
+        //console.log(novRes);
+
+        const dezembro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "12",
+                },
+            },
+        });
+
+        let dezVA = 0
+
+        dezembro.filter(item => {
+            if(item.status === "aberto") {
+                dezVA = dezVA + item.valor
+            };
+        });
+
+        let dez = 0
+
+        dezembro.forEach(item => dez = dez + item.valor);
+
+        const dezRes = (dezVA + novVA + outVA + setVA + agoVA + julVA + junVA + maiVA + abrVA + marVA + fevVA + janVA) / (jan + fev + mar + abr + mai + jun + jul + ago + set + out + nov + dez);
+
+    //console.log(dezRes);
+
+    //console.log(janeiro);
+
+    //let inadimplenciaJSON = JSON.stringify({"mes"});
+
+   /* let inadimplenciaJSON = '{"mes": "janeiro", "inadimplencia": ['+ JanRes + ']},'+
+                        '{"mes": "fevereiro", "inadimplencia": ['+ fevRes +']},'+
+                        '{"mes": "marco", "inadimplencia": ['+ marRes +']},'+
+                        '{"mes": "abril", "inadimplencia": ['+ abrRes +']},'+
+                        '{"mes": "maio", "inadimplencia": ['+ maiRes +']},'+
+                        '{"mes": "junho", "inadimplencia": ['+ junRes +']},'+
+                        '{"mes": "julho", "inadimplencia": ['+ julRes +']},'+
+                        '{"mes": "agosto", "inadimplencia": ['+ agoRes +']},'+
+                        '{"mes": "setembro", "inadimplencia": ['+ setRes +']},'+
+                        '{"mes": "outubro", "inadimplencia": ['+ outRes +']},'+
+                        '{"mes": "novembro", "inadimplencia": ['+ novRes +']},'+
+                        '{"mes": "dezembro", "inadimplencia": ['+ dezRes +']}' +
+                        ']}'; */
+
+    let inadimplenciaJSON = '[{ "mes": "janeiro", "inadimplencia": ' + JanRes + '}, {"mes": "fevereiro", "inadimplencia": '+ fevRes +'}, {"mes": "marco", "inadimplencia": '+ marRes +'}, {"mes": "abril", "inadimplencia": '+ abrRes +'}, {"mes": "maio", "inadimplencia": '+ maiRes +'}, {"mes": "junho", "inadimplencia": '+ junRes +'}, {"mes": "julho", "inadimplencia": '+ julRes +'}, {"mes": "agosto", "inadimplencia": '+ agoRes +'}, {"mes": "setembro", "inadimplencia": '+ setRes +'}, {"mes": "outubro", "inadimplencia": '+ outRes +'}, {"mes": "novembro", "inadimplencia": '+ novRes +'}, {"mes": "dezembro", "inadimplencia": '+ dezRes +'}]';
+
+    const readableFile = new Readable();
+        readableFile.push(inadimplenciaJSON);
+        readableFile.push(null);
+
+        const inadimplenciaLine = readline.createInterface({
+            input: readableFile
+        });
+
+    const ina = JSON.parse(inadimplenciaJSON);
+
+    console.log(ina);
+
+    let inadimplenciaLineSplit: string[] = [] 
+
+    for await (let line of inadimplenciaLine) {
+        if (line !== invalidColumn) {
+           inadimplenciaLineSplit = line.split(",");
+        }
+                        
+    inadimplenciaLineSplit[0] ? ina.push({
+        mes: inadimplenciaLineSplit[0],
+        inadimplencia: Number(inadimplenciaLineSplit[1]),
+    }) : [];
+        
+    /*for await ( let {mes,inadimplencia} of ina ) {
+        await client.ina.create({
+            data: {
+                mes,
+                inadimplencia,
+            },
+        });
+    }*/
+}
+
+    const parseObj = new Parser();
+
+    const csv = parseObj.parse(ina)
+
+    console.log("CSV is: ", csv);
+
+    return response.status(200);
 });
 
 router.get(
@@ -171,12 +504,35 @@ router.get(
             },
         });
 
-        let valorAberto = 0;
+    let janeiroValorAberto = 0
 
-        pagamentos.filter((item) => {
-            if (item.status === "aberto") {
-                valorAberto = valorAberto + item.valor;
-            }
+    janeiro.filter(item => {
+        if(item.status === "aberto") {
+            janeiroValorAberto = janeiroValorAberto + item.valor
+        };
+    });
+
+    let JaneiroTotal = 0
+
+    janeiro.forEach(item => JaneiroTotal = JaneiroTotal + item.valor);
+
+    const JaneiroResultado = janeiroValorAberto / JaneiroTotal;
+
+    console.log(JaneiroResultado);
+
+    return response.status(JaneiroResultado);
+
+});
+
+router.get(
+    "/inadimplencia/fevereiro", async (request: Request, response: Response) => {
+        
+        const fevereiro = await client.pagamentos.findMany({
+            where: {
+                mes: {
+                    endsWith: "2",
+                },
+            },
         });
 
         let total = 0;
