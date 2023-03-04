@@ -24,8 +24,6 @@ router.post(
     "/pagamentos",
     multerConfig.single("file"),
     async (request: Request, response: Response) => {
-        //console.log(_req.file?.buffer.toString("utf-8"));
-
         const { file } = request;
 
         const buffer = file?.buffer;
@@ -128,7 +126,7 @@ router.get("/total", async (request: Request, response: Response) => {
     let totalVA = 0;
     let total = 0;
 
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 12; i++) {
         const mes = i.toString().padStart(2, "0");
         const pagamentos = await client.pagamentos.findMany({
             where: {
@@ -150,7 +148,7 @@ router.get("/total", async (request: Request, response: Response) => {
         });
 
         const totalMes = soma;
-        result.push(totalMes);
+        result.push({ mes: mes, total: totalMes });
         totalVA += va;
         total += totalMes;
     }
