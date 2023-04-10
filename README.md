@@ -1,62 +1,56 @@
-# CSV-test
+# API-CSV
 
-Consistem uma API de importação de CSV, usando typescript, express, prisma e o db postgres
+API-CSV is a CSV import API developed using TypeScript, Express, Prisma, and PostgreSQL. The API allows you to upload CSV files, retrieve information about delinquency, payments, and enrollment statuses.
 
-Para conseguir inicializar a aplicação é necessário instalar as dependencias com o comando
+## Requirements
 
-"npm intall"
+- Node.js
+- PostgreSQL
+- Installation
 
-"npm install @prisma/client"
+1. Clone the repository:
 
-"npm i @prisma/engines"
+> git clone https://github.com/BOThiago/API-CSV.git
 
-npm install @prisma/client
+2. Enter the project folder and install the dependencies:
 
-npm i @prisma/engines
+> cd API-CSV
+> npm install
 
-Em .env configurar conexão com um banco de dados postgres
+3. Configure the connection to the PostgreSQL database in the .env file.
 
-No SQL Shell (Postgres) crie uma database com o nome
+4. Create a new database called "csvdb" in PostgreSQL.
 
-"csvdb"
+5. Run the command to create a new Prisma migration:
 
-Após isso é necessário criar a nova migrate do prisma com o comando
+> npx prisma migrate dev
 
-"npx prisma migrate dev"
+6. Give a name to the migration.
 
-De um nome para a migração
+7. Generate the database tables with the command:
 
-Quando a migração for criada, é necessário gerar as tabelas do banco, com o comando
+> npx prisma generate
 
-"npx prisma generate"
+8. Start the application with the command:
 
-Para inicialoza a aplicação é necessário digitar o comando
+> npm run dev
 
-"npm run dev"
+- The application will be available on port 3000.
 
-Com isso a aplicação deve subir na porta 3000
+### Routes
 
-<<<<<<< HEAD
-                            No Postman ou no Insomnia crie uma rota do tipo POST (localhost:3000/pagamentos), vá em form-data e defina 'KEY' como 'file', e insira o arquivo CSV desejado.
+- Use an HTTP client, such as Postman or Insomnia, to access the following routes:
 
-                            Também será possível acessar a rota do tipo GET (localhost:3000/Inadimplentes), que mostrará todas as matriculas que estão com o status em aberto
+  - POST /upload: Go to form-data and set 'KEY' as 'file', then insert the desired CSV file.
 
+  - GET /Inadimplentes: Displays all enrollments with an open status.
 
-                            Também será possível acessar a rota do tipo GET (localhost:3000/inadimplencia/2022-01), que mostrará de acordo com o mês o resultado do cálculo esperado
+  - GET /pagos: Displays all enrollments with a paid status.
 
-                            a rota do tipo GET (localhost:3000/pagos), que mostrará todas as matriculas que estão com o status em pago
+  - GET /total: Displays the CSV with delinquencies.
 
-                            e por fim a rota do tipo GET (localhost:3000/total), que mostrará o csv com as inadimplencias.
-=======
-No Postman ou no Insomnia crie as seguintes rotas: 
-
-                            a rota do tipo POST (localhost:3000/upload), vá em form-data e defina 'KEY' como 'file', e insira o arquivo CSV desejado.
-                            
-                            a rota do tipo GET (localhost:3000/Inadimplentes), que mostrará todas as matriculas que estão com o status em aberto
-
-                            a rota do tipo GET (localhost:3000/pagos), que mostrará todas as matriculas que estão com o status em pago
-
-                            a rota do tipo GET (localhost:3000/total), que mostrará o csv com as inadimplencias.
-
-                            e por fim a rota do tipo GET (localhost:3000/inadimplencia/{Mes}), que no campo mes, for preenchido como janeiro, trará o valor de inadimplência de apenas aquele mês.
->>>>>>> 2750ec3e90e69498da8aaff8399d59ec75a694cf
+  - GET /inadimplencia/{Month}: Replace {Month} with a month (e.g., January) to get the delinquency value for that specific month.
+ 
+ ## Conclusion
+ 
+API-CSV provides an easy and efficient way to import CSV files and manage delinquency, payment, and enrollment status information. With its simple setup process and clear instructions, you can quickly integrate it into your projects. The provided routes make it straightforward to access and manage the imported data, allowing you to focus on building the features that matter most to your users. Give API-CSV a try and experience the convenience it brings to working with CSV files and financial data.
